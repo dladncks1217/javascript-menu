@@ -13,10 +13,11 @@ class Coach {
     this.#unableEatList.push(...location.slice());
   }
 
+  // 오류있었는데 만들어놓고 사용안해서 오류안남
   isAlreadyEatenTwice(menu) {
-    const food = this.#eatenFoods.slice();
+    let food = this.#eatenFoods.slice();
     food = food.filter((value) => value === menu);
-    if (food.length > 2) return true;
+    if (food.length > 1) return true;
     return false;
   }
 
@@ -30,6 +31,7 @@ class Coach {
     let result;
     while (addCheck === this.#eatenFoods.length) {
       let menu = suggestFunc(category);
+      if (this.isAlreadyEatenTwice(menu)) continue;
       if (verify(this.#eatenFoods, menu)) continue;
       if (this.#unableEatList.includes(menu)) menu = '';
       this.#eatenFoods.push(menu);
